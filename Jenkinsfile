@@ -10,11 +10,5 @@ pipeline {
                    '''
             }
         }
-        stage('Test'){        
-            agent { docker 'python:3.5.1' }
-            steps {
-            python test.py
-            }
-        }
     }
 }
