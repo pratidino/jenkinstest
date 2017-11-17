@@ -8,7 +8,12 @@ pipeline {
                    echo "Multiline also works"
                    ls -lah
                    '''
-                python test.py
+            }
+        }
+        agent { docker 'python:3.5.1' }
+        stage('Test'){
+            steps {
+            python test.py
             }
         }
     }
