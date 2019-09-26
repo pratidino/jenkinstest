@@ -24,11 +24,22 @@ pipeline {
 	    	  sh 'py.test --verbose --junit-xml test-reports/results.xml test_test.py'
             }
         }
+	stage('Build Container'){
+	    steps{
+	        sh 'sudo docker build -t pytest1 .'
+		sh 'sudo docker push gpratidi/pytest1:latest'
+	    }
+	}
         stage('Deploy - Staging'){
+	    agent{
+	        docker{
+		    image 'gpratidi/pytest1:latest'
+		}
+	    }
             steps {
                 echo 'Deploying in staging'
-                echo 'copy to Staging env'
-                echo 'Running.. smoke test'
+                echo 'Running it..'
+                sh '/home/app/test.py'
             }
         }
 	stage('Sanity check'){
@@ -37,10 +48,15 @@ pipeline {
 	    }
 	}
         stage('Deploy - Production'){
+	    agent{
+	        docker{
+		   image 'gpratidi/pytest1:latest'
+		}
+	    }
             steps{
                 echo 'Deploying in Production'
-                echo 'copy to Prod'
-                echo 'restarting services'
+                echo 'Running in Production..'
+                sh '/home/app/test.py'
             }
         }
     }
