@@ -16,7 +16,7 @@ pipeline {
         }
         stage('Test 2'){
             steps {
-                sh 'python 1000000 + 1000000'
+                sh 'python -c 1000000 + 1000000'
             }
         }
     }
