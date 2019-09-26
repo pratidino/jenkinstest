@@ -19,10 +19,24 @@ pipeline {
                 sh 'python -c 1000000 + 1000000'
             }
         }
+        stage('Deploy - Staging'){
+            steps {
+                echo 'Deploying in staging'
+                echo 'copy to Staging env'
+                echo 'Running.. smoke test'
+            }
+        }
+        stage('Deploy - Production'){
+            steps{
+                echo 'Deploying in Production'
+                echo 'copy to Prod'
+                echo 'restarting services'
+            }
+        }
     }
     post{
         always{
-            junit 'build/reports/**/*.xml'
+            echo 'End of pipeline'
         }
     }
 }
