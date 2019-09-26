@@ -8,10 +8,15 @@ pipeline {
                 sh 'python --version'
             }
         }
-        stage('Test') {
+        stage('Test 1') {
             steps {
                 sh 'python --version'
                 sh 'python test.py'
+            }
+        }
+        stage('Test 2'){
+            steps {
+                sh 'python 1000000 + 1000000'
             }
         }
     }
