@@ -14,9 +14,14 @@ pipeline {
                 sh 'python test.py'
             }
         }
-        stage('Test 2'){
+        stage('Test 2 - unittest'){
+	    agent{
+		docker{
+			image 'qnib/pytest'
+		}
+	    }
             steps {
-                sh 'python -c 1000000 + 1000000'
+	    	  sh 'py.test --verbose --junit-xml test-reports/results.xml test_test.py'
             }
         }
         stage('Deploy - Staging'){
