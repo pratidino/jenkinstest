@@ -13,3 +13,4 @@ if __name__ == "__main__":
         print (s)
         print(add(2000,2000))
         print(add('abc','def'))
+        print(add('abc',123))
