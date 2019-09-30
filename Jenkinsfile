@@ -25,40 +25,23 @@ pipeline {
             }
         }
 	stage('Build Container'){
-	    steps{
-	        sh 'sudo docker build -t pytest1 .'
-		sh 'sudo docker push gpratidi/pytest1:latest'
+            node{
+                #app = docker.build("gpratidi/pytest1")
+	        def image = docker.build("pytest1:${env.BUILD_ID}")
 	    }
 	}
-        stage('Deploy - Staging'){
-	    agent{
-	        docker{
-		    image 'gpratidi/pytest1:latest'
-		}
-	    }
-            steps {
-                echo 'Deploying in staging'
-                echo 'Running it..'
-                sh '/home/app/test.py'
-            }
-        }
 	stage('Sanity check'){
 	    steps{
 		input "Does this Staging look OK to you?"
 	    }
 	}
         stage('Deploy - Production'){
-	    agent{
-	        docker{
-		   image 'gpratidi/pytest1:latest'
-		}
+	    node{
+		def image = docker.build("pytest1:${env.BUILD_ID}")
+		image.push()
+		image.push('latest')
 	    }
-            steps{
-                echo 'Deploying in Production'
-                echo 'Running in Production..'
-                sh '/home/app/test.py'
-            }
-        }
+	}
     }
     post{
         always{
