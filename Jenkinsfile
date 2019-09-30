@@ -51,13 +51,7 @@ pipeline {
 		    sh 'docker tag pytest1 registry:$BUILD_NUMBER'
 		    sh 'docker push registry:$BUILD_NUMBER'
 		    sh 'docker push registry:latest'
-		}
 	    }
 	}
-    }
-    post{
-        always{
-            echo 'End of pipeline'
-        }
     }
 }
