@@ -25,9 +25,10 @@ pipeline {
             }
         }
 	stage('Build Container'){
-	    agent{dockerfile true}
+	    agent any
 	    steps{
-		    sh 'test build'
+		   echo 'test build'
+		   sh 'docker build -t pytest1 .'
 	    }
 	}
 	stage('Sanity check'){
