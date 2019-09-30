@@ -39,17 +39,13 @@ pipeline {
 	    }
 	}
         stage('Deploy - Production'){
-            environment{
-	        registry = "gpratidi/pytest1"
-		registryCredential = 'docker-hub-creds'
-	    }
-	    
             agent any
             steps{
 		    echo 'Push docker image'
-		    sh 'docker tag pytest1 registry:$BUILD_NUMBER'
-		    sh 'docker push registry:$BUILD_NUMBER'
-		    sh 'docker push registry:latest'
+		    sh 'docker tag pytest1 gpratidi/pytest1:$BUILD_NUMBER'
+		    
+		    sh 'docker push gpratidi/pytest1:$BUILD_NUMBER'
+		    sh 'docker push gpratidi/pytest1:latest'
 	    }
 	}
     }
