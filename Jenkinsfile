@@ -28,7 +28,6 @@ pipeline {
 	    agent{dockerfile true}
 	    steps{
 		    sh 'test build'
-		}
 	    }
 	}
 	stage('Sanity check'){
