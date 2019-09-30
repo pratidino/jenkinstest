@@ -25,9 +25,7 @@ pipeline {
             }
         }
 	stage('Build Container'){
-            node{
-	        def image = docker.build("pytest1:${env.BUILD_ID}")
-	    }
+	    def image = docker.build("pytest1:${env.BUILD_ID}")
 	}
 	stage('Sanity check'){
 	    steps{
@@ -35,11 +33,9 @@ pipeline {
 	    }
 	}
         stage('Deploy - Production'){
-	    node{
-		def image = docker.build("pytest1:${env.BUILD_ID}")
-		image.push()
-		image.push('latest')
-	    }
+	    def image = docker.build("pytest1:${env.BUILD_ID}")
+	    image.push()
+	    image.push('latest')
 	}
     }
     post{
