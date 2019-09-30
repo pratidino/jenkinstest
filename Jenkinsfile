@@ -26,13 +26,14 @@ pipeline {
         }
 	stage('Build Container'){
 	    environment{
+	        image = "pytest1"
 	        registry = "gpratidi/pytest1"
 		registryCredential = 'docker-hub-creds'
 	    }
  	    agent any
 	    steps{
 	        script{
-		    docker.build registry + ":$BUILD_NUMBER"
+		    docker.build image + ":$BUILD_NUMBER"
 		}
 	    }
 	}
@@ -50,8 +51,8 @@ pipeline {
             agent any
             steps{
 	        script{
-		    docker.push()
-		    docker.push('latest')
+		    docker.push(registry + ":$BUILD_NUMBER")
+		    docker.push(registry + ":latest")
 		}
 	    }
 	}
