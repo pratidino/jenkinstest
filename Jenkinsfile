@@ -49,7 +49,11 @@ pipeline {
 	    }
 	}
 	stage('Test Container'){
-	    agent{ docker{image gpratidi/pytest1}}
+	    agent{
+	        docker{
+		    image 'gpratidi/pytest1'
+		}
+	    }
 	    steps{
 	        sh 'python --version'
 		sh 'python test.py'
