@@ -27,13 +27,16 @@ pipeline {
 	stage('Build Container'){
 	    agent any
 	    steps{
-		   echo 'test build'
+		   echo 'Docker build'
 		   sh 'docker build -t pytest1 /home/nino/jenkinstest/'
 	    }
 	}
 	stage('Sanity check'){
+	    agent any
 	    steps{
-		input "Does this Staging look OK to you?"
+	        echo 'Test Docker image'
+		sh 'docker run -it pytest1 python /app/test.py'
+		input "Does this look OK to you?"
 	    }
 	}
         stage('Deploy - Production'){
@@ -44,9 +47,10 @@ pipeline {
 	    
             agent any
             steps{
-	        script{
-		    docker.push(registry + ":$BUILD_NUMBER")
-		    docker.push(registry + ":latest")
+		    echo 'Push docker image'
+		    sh 'docker tag pytest1 registry:$BUILD_NUMBER'
+		    sh 'docker push registry:$BUILD_NUMBER'
+		    sh 'docker push registry:latest'
 		}
 	    }
 	}
