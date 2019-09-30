@@ -38,7 +38,7 @@ pipeline {
 		input "Does this look OK to you?"
 	    }
 	}
-        stage('Deploy - Production'){
+        stage('Push container'){
             agent any
             steps{
 		    echo 'Push docker image'
@@ -47,6 +47,19 @@ pipeline {
 		    sh 'docker push gpratidi/pytest1:$BUILD_NUMBER'
 		    sh 'docker push gpratidi/pytest1:latest'
 	    }
+	}
+	stage('Test Container'){
+	    agent{ docker{image gpratidi/pytest1}}
+	    steps{
+	        sh 'python --version'
+		sh 'python test.py'
+	    }
+	}
+	stage('Deploy in production'){
+	   agent any
+	   steps{
+	       sh 'deploying in Prod'
+	   }
 	}
     }
 }
