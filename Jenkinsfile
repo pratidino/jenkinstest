@@ -25,9 +25,9 @@ pipeline {
             }
         }
 	stage('Build Container'){
+	    agent{dockerfile true}
 	    steps{
-	        script{
-		    sh 'docker build -t pytest1 .'
+		    sh 'test build'
 		}
 	    }
 	}
