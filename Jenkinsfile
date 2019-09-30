@@ -28,7 +28,7 @@ pipeline {
 	    agent any
 	    steps{
 		   echo 'test build'
-		   sh 'docker build -t pytest1 .'
+		   sh 'docker build -t pytest1 /home/nino/jenkinstest/'
 	    }
 	}
 	stage('Sanity check'){
