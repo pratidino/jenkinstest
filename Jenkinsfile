@@ -32,6 +32,9 @@ pipeline {
 		    additionalBuildArgs '--build-arg version=$BUILD_NUMBER'
 		}
 	    }
+	    steps{
+	        echo "building docker image"
+	    }
 	}
 	stage('Sanity check'){
 	    steps{
