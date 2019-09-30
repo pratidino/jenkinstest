@@ -33,7 +33,7 @@ pipeline {
  	    agent any
 	    steps{
 	        script{
-		    docker.build image + ":$BUILD_NUMBER"
+		    docker.build registry + ":$BUILD_NUMBER"
 		}
 	    }
 	}
