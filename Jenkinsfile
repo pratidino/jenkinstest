@@ -62,7 +62,7 @@ pipeline {
 	stage('Deploy in production'){
 	   agent any
 	   steps{
-	       sh 'deploying in Prod'
+	       echo 'deploying in Prod'
 	   }
 	}
     }
