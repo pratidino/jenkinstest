@@ -35,7 +35,6 @@ pipeline {
 	    agent any
 	    steps{
 	        echo 'Test Docker image'
-		sh 'docker run -it pytest1 python /app/test.py'
 		input "Does this look OK to you?"
 	    }
 	}
