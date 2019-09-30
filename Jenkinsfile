@@ -28,8 +28,7 @@ pipeline {
             agent{
 	        dockerfile{
 		    filename 'Dockerfile'
-		    label 'pytest1'
-		    additionalBuildArgs '--build-arg version=$BUILD_NUMBER'
+		    additionalBuildArgs '--build-arg tag=pytest1:$BUILD_NUMBER'
 		}
 	    }
 	    steps{
