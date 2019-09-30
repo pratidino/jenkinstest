@@ -25,14 +25,10 @@ pipeline {
             }
         }
 	stage('Build Container'){
-            agent{
-	        dockerfile{
-		    filename 'Dockerfile'
-		    additionalBuildArgs '--build-arg tag=pytest1:$BUILD_NUMBER'
-		}
-	    }
 	    steps{
-	        echo "building docker image"
+	        script{
+		    sh 'docker build -t pytest1 .'
+		}
 	    }
 	}
 	stage('Sanity check'){
