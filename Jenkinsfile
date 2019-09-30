@@ -25,6 +25,7 @@ pipeline {
             }
         }
 	stage('Build Container'){
+            checkout scm
 	    def image = docker.build("pytest1:${env.BUILD_ID}")
 	}
 	stage('Sanity check'){
