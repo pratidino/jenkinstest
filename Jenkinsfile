@@ -26,7 +26,6 @@ pipeline {
         }
 	stage('Build Container'){
             node{
-                #app = docker.build("gpratidi/pytest1")
 	        def image = docker.build("pytest1:${env.BUILD_ID}")
 	    }
 	}
