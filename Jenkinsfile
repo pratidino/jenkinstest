@@ -25,8 +25,16 @@ pipeline {
             }
         }
 	stage('Build Container'){
-            checkout scm
-	    def image = docker.build("pytest1:${env.BUILD_ID}")
+	    environment{
+	        registry = "gpratidi/pytest1"
+		registryCredential = 'docker-hub-creds'
+	    }
+ 	    agent any
+	    steps{
+	        script{
+		    docker.build registry + ":$BUILD_NUMBER"
+		}
+	    }
 	}
 	stage('Sanity check'){
 	    steps{
@@ -34,9 +42,18 @@ pipeline {
 	    }
 	}
         stage('Deploy - Production'){
-	    def image = docker.build("pytest1:${env.BUILD_ID}")
-	    image.push()
-	    image.push('latest')
+            environment{
+	        registry = "gpratidi/pytest1"
+		registryCredential = 'docker-hub-creds'
+	    }
+	    
+            agent any
+            steps{
+	        script{
+		    docker.push()
+		    docker.push('latest')
+		}
+	    }
 	}
     }
     post{
